@@ -9,42 +9,46 @@ sleep_time = 1
 
 softwares = {
     1: {
-        "name": "Microsoft Excel",
-        "priority": 1,
-        "burst": 100,
-    },
-    2: {
         "name": "Microsoft Teams",
-        "priority": 4,
-        "burst": 500,
-    },
-    3: {
-        "name": "Microsoft Edge",
-        "priority": 3,
-        "burst": 800,
-    },
-    4: {
-        "name": "Google Chrome",
         "priority": 3,
         "burst": 600,
     },
-    5: {
+    2: {
+        "name": "Google Chrome",
+        "priority": 1,
+        "burst": 800,
+    },
+    3: {
+        "name": "Steam",
+        "priority": 4,
+        "burst": 400,
+    },
+    4: {
         "name": "Visual Studio Code",
+        "priority": 3,
+        "burst": 500,
+    },
+    5: {
+        "name": "Excel",
         "priority": 2,
-        "burst": 200,
+        "burst": 300,
     }
 }
 
+# total burst time
+total_time = 0
+for i in softwares:
+    total_time += softwares[i]['burst']
+
 # table with columns: fcfs, sjf, ps and rows from 100 ms to 2200 ms, jumping by 100 ms, filled with ''
-table = pd.DataFrame(index=range(100, 2201, 100), columns=['fcfs', 'sjf', 'ps']).fillna('')
+table = pd.DataFrame(index=range(100, total_time+1, 100), columns=['fcfs', 'sjf', 'ps']).fillna('')
 
 def custom_print():
-    for i in range(0, 23, 1):
+    for i in range(0, int(total_time/100), 1):
         # Clear the terminal screen
         os.system('cls' if os.name == 'nt' else 'clear')
         # Format table
         formatted_table = tabulate(table, headers='keys', tablefmt='pretty', showindex=True, numalign='center')
-        formatted_table = formatted_table.replace(" ms", "")
         print(formatted_table)
         time.sleep(sleep_time)
 
